@@ -19,6 +19,7 @@
     "@material/mwc-button": "^0.15.0",
     "@material/mwc-dialog": "^0.15.0",
     "@material/mwc-drawer": "^0.15.0",
+    "@material/mwc-fab": "^0.15.0",
     "@material/mwc-list": "^0.15.0",
     "@vaadin/router": "^1.7.2",
     "@webcomponents/webcomponentsjs": "^2.4.3",

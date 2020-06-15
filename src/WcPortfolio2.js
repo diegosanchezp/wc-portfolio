@@ -1,84 +1,76 @@
 import { LitElement, html, css } from 'lit-element';
-import { openWcLogo } from './open-wc-logo.js';
+import '@material/mwc-drawer';
+import '@material/mwc-list/mwc-list.js';
+import '@material/mwc-list/mwc-list-item.js';
+import '@material/mwc-fab';
 
 export class WcPortfolio2 extends LitElement {
   static get properties() {
     return {
-      title: { type: String },
-      page: { type: String },
+      drawer: {type: HTMLElement}
     };
   }
 
   static get styles() {
     return css`
-      :host {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        font-size: calc(10px + 2vmin);
-        color: #1a2b42;
-        max-width: 960px;
-        margin: 0 auto;
-        text-align: center;
+      img{
+        max-width: 100%;
+      }
+      .sidebar{
+        height: 100vh;
       }
 
-      main {
-        flex-grow: 1;
+      .app-fab--absolute{
+        position: fixed;
+        bottom: 1rem;
+        right: 1rem;
+        z-index: 1;
       }
 
-      .logo > svg {
-        margin-top: 36px;
-        animation: app-logo-spin infinite 20s linear;
-      }
-
-      @keyframes app-logo-spin {
-        from {
-          transform: rotate(0deg);
+      @media(min-width: 1024px) {
+        .app-fab--absolute {
+          bottom: 1.5rem;
+          right: 1.5rem;
         }
-        to {
-          transform: rotate(360deg);
-        }
-      }
-
-      .app-footer {
-        font-size: calc(12px + 0.5vmin);
-        align-items: center;
-      }
-
-      .app-footer a {
-        margin-left: 5px;
       }
     `;
   }
 
+  toggleDrawer(){
+    this.drawer.open = !this.drawer.open;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    document.addEventListener("DOMContentLoaded", ()=>{
+      this.drawer = this.shadowRoot.querySelector("mwc-drawer");
+    });
+  }
+
   render() {
     return html`
-      <main>
-        <div class="logo">${openWcLogo}</div>
-        <h1>My app</h1>
-
-        <p>Edit <code>src/WcPortfolio2.js</code> and save to reload.</p>
-        <a
-          class="app-link"
-          href="https://open-wc.org/developing/#code-examples"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code examples
-        </a>
-      </main>
-
-      <p class="app-footer">
-        🚽 Made with love by
-        <a
-          target="_blank"
-          rel="noopener noreferrer"
-          href="https://github.com/open-wc"
-          >open-wc</a
-        >.
-      </p>
+      <mwc-drawer open type="dismissible">
+        <div class="sidebar">
+          <img src="src/Images/ProfilePic.jpg" alt="Profile Picture"> 
+          <p>DIEGO SÁNCHEZ</p>
+          <p>Full Stack Web Developer</p>
+          <mwc-list activatable>
+            <mwc-list-item>About</mwc-list-item>
+            <mwc-list-item>Academics</mwc-list-item>
+            <mwc-list-item>Certifications</mwc-list-item>
+            <mwc-list-item>Projects</mwc-list-item>
+          </mwc-list>
+        </div>
+        <div slot="appContent">
+          <div>
+            <mwc-fab 
+             @click=${this.toggleDrawer}
+             class="app-fab--absolute"
+             icon="menu">
+            </mwc-fab>
+          </div>
+        </div>
+      </mwc-drawer>
     `;
   }
 }
